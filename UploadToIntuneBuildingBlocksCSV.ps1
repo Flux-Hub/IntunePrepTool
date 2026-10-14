@@ -23,6 +23,33 @@ param (
 
 
 #Requires -RunAsAdministrator
+
+#Reads a tenant file saved in "plain" mode. The client secret is stored encrypted with
+#Windows DPAPI (only readable by the same Windows user on the same computer).
+#Files created by older versions contain the secret in plain text; they are encrypted on first read.
+function Get-IPTTenantFile
+{
+	param
+	(
+		[Parameter(Mandatory = $true)]
+		[string]$CustomerName
+	)
+	$path = "c:\users\$env:username\.IntunePrepTool\$CustomerName.csv"
+	$tenant = Import-Csv $path -ErrorAction Stop
+	try
+	{
+		$secureSecret = ConvertTo-SecureString -String $tenant.clientsecret -ErrorAction Stop
+	}
+	catch
+	{
+		#Legacy plain text secret: encrypt it in place
+		$secureSecret = ConvertTo-SecureString -String $tenant.clientsecret -AsPlainText -Force
+		$tenant.clientsecret = ConvertFrom-SecureString -SecureString $secureSecret
+		$tenant | Export-Csv $path -NoTypeInformation -Force
+	}
+	$tenant.clientsecret = [System.Net.NetworkCredential]::new('', $secureSecret).Password
+	return $tenant
+}
 #Installatie Powershell Modules
 $RequiredPSModules = get-content "C:\Program Files\IntunePrepTool\InstallReqPSModules.txt"
 if ($RequiredPSModules -like 'false')
@@ -62,7 +89,7 @@ foreach ($load in $load_import_csv)
 		}
 		else
 		{
-			$cust = import-csv "c:\users\$env:username\.IntunePrepTool\$tenantname.csv"
+			$cust = Get-IPTTenantFile -CustomerName $tenantname
 			$tenantID = $cust.tenantID
 			$AppId = $cust.appId
 			$Secret = $cust.clientsecret

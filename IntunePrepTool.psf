@@ -4246,7 +4246,7 @@ foreach ($load in $load_import_csv)
 		}
 		else
 		{
-			$cust = import-csv "c:\users\$env:username\.IntunePrepTool\$tenantname.csv"
+			$cust = Get-IPTTenantFile -CustomerName $tenantname
 			$tenantID = $cust.tenantID
 			$AppId = $cust.appId
 			$Secret = $cust.clientsecret
@@ -11779,7 +11779,7 @@ $config_treeview3_AfterSelect = [System.Windows.Forms.TreeViewEventHandler]{
 			else
 			{
 				$cust = $config_treeview3.SelectedNode.Name
-				$custinfo = Import-Csv "c:\users\$env:username\.IntunePrepTool\$cust.csv"
+				$custinfo = Get-IPTTenantFile -CustomerName $cust
 				$config_tenant_info_tenant_name_textbox3.Text = $config_treeview3.SelectedNode.Name
 				$tenantID = $custinfo.tenantID
 				$appID = $custinfo.appId
@@ -11967,7 +11967,7 @@ $infoToolStripMenuItem_Click = {
 			else
 			{
 				$cust = $config_treeview3.SelectedNode.Name
-				$custinfo = Import-Csv "c:\users\$env:username\.IntunePrepTool\$cust.csv"
+				$custinfo = Get-IPTTenantFile -CustomerName $cust
 				$config_tenant_info_tenant_name_textbox3.Text = $config_treeview3.SelectedNode.Name
 				$tenantID = $custinfo.tenantID
 				$appID = $custinfo.appId
@@ -12043,7 +12043,7 @@ $config_tenant_info_secret_show_button2_Click = {
 			else
 			{
 				$cust = $config_treeview3.SelectedNode.Name
-				$custinfo = Import-Csv "c:\users\$env:username\.IntunePrepTool\$cust.csv"
+				$custinfo = Get-IPTTenantFile -CustomerName $cust
 				$config_tenant_info_secret_textbox3.Text = $custinfo.clientsecret
 			}
 		}

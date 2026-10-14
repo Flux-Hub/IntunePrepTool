@@ -124,6 +124,10 @@ Screenshots with instructions below.
 - **App registration:** gets one Microsoft Graph application permission, `DeviceManagementApps.ReadWrite.All`, which is all the upload, assignment, dependency and supersedence functions use.
 - **Admin consent:** after the app registration is created, the tool shows (and copies to the clipboard) a link to the app's **API permissions** page. A **Global Administrator** or **Privileged Role Administrator** opens it and clicks **Grant admin consent**. Uploads work once consent is granted.
 
+#### Where the client secret is stored
+
+In "plain text" mode the client secret in `C:\Users\<user>\.IntunePrepTool\<customer>.csv` is encrypted with Windows DPAPI, so only the same Windows user on the same computer can read it. Files created by older versions are encrypted automatically the first time the tenant is used. Copying the file to another user or PC does not work; add the tenant again there.
+
 > Tenants added with older versions also have `Files.Read.All`, which the tool does not use. Remove it from the app registration's API permissions in the Entra portal.
 ![image](https://github.com/rink-turksma/IntunePrepTool/assets/127322820/c8e1afdd-8184-4900-8df3-89c43a14dd21)
 

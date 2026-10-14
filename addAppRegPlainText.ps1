@@ -71,7 +71,8 @@ $clientSecret = Add-MgApplicationPassword -ApplicationId ($appInfo.Id) -Password
 
 $tenantID = $tenantInfo.TenantId
 $appID = $appInfo.AppId
-$clientSecret = $clientSecret.SecretText
+#Encrypt the secret with Windows DPAPI before it is written to disk (readable only by this user on this computer)
+$clientSecret = ConvertTo-SecureString -String $clientSecret.SecretText -AsPlainText -Force | ConvertFrom-SecureString
 $username = $appInfo.AppId
 $password = $clientSecret.SecretText
 $config_tenantinfo = $null;
