@@ -120,6 +120,7 @@ Screenshots with instructions below.
 #### Required permissions (least privilege)
 
 - **Account used for setup:** needs only the **Application Developer** Entra role (or higher). The tool signs in with the delegated `Application.ReadWrite.All` scope and can then only create and manage app registrations that account owns.
+- **One-time approval per tenant:** the setup signs in through Microsoft's *Microsoft Graph Command Line Tools* app, and its `Application.ReadWrite.All` scope requires admin consent. If it has never been approved in the tenant, a non-admin account sees **"Need admin approval"**. An administrator (Cloud Application Administrator or higher) approves it once, after which the Application Developer role is enough.
 - **App registration:** gets one Microsoft Graph application permission, `DeviceManagementApps.ReadWrite.All`, which is all the upload, assignment, dependency and supersedence functions use.
 - **Admin consent:** after the app registration is created, the tool shows (and copies to the clipboard) a link to the app's **API permissions** page. A **Global Administrator** or **Privileged Role Administrator** opens it and clicks **Grant admin consent**. Uploads work once consent is granted.
 
