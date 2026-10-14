@@ -116,6 +116,14 @@ Screenshots with instructions below.
 ![image](https://github.com/rink-turksma/IntunePrepTool/assets/127322820/0200af55-3d8a-4caf-b4fd-fa9c90eb9501)
 
 ### Add App registration EntraID for Upload function
+
+#### Required permissions (least privilege)
+
+- **Account used for setup:** needs only the **Application Developer** Entra role (or higher). The tool signs in with the delegated `Application.ReadWrite.All` scope and can then only create and manage app registrations that account owns.
+- **App registration:** gets one Microsoft Graph application permission, `DeviceManagementApps.ReadWrite.All`, which is all the upload, assignment, dependency and supersedence functions use.
+- **Admin consent:** after the app registration is created, the tool shows (and copies to the clipboard) a link to the app's **API permissions** page. A **Global Administrator** or **Privileged Role Administrator** opens it and clicks **Grant admin consent**. Uploads work once consent is granted.
+
+> Tenants added with older versions also have `Files.Read.All`, which the tool does not use. Remove it from the app registration's API permissions in the Entra portal.
 ![image](https://github.com/rink-turksma/IntunePrepTool/assets/127322820/c8e1afdd-8184-4900-8df3-89c43a14dd21)
 
 ![image](https://github.com/rink-turksma/IntunePrepTool/assets/127322820/c955e113-82ac-4878-9517-400e5e6f2074)

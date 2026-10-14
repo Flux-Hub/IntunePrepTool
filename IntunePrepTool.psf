@@ -11848,7 +11848,7 @@ $config_tenant_add_button2_Click = {
 	
 	Set-Location $PSScriptRoot
 	
-	if ([System.Windows.Forms.MessageBox]::Show('Please logon to the tenant with Global Admin rights. App registration will be added. Please wait a few seconds!', 'Logon to tenant', [System.Windows.Forms.MessageBoxButtons]::YesNo) -eq 'Yes')
+	if ([System.Windows.Forms.MessageBox]::Show('Please logon to the tenant with an account that has the Application Developer role (or higher). App registration will be added. An administrator must grant admin consent afterwards. Please wait a few seconds!', 'Logon to tenant', [System.Windows.Forms.MessageBoxButtons]::YesNo) -eq 'Yes')
 	{
 		
 
